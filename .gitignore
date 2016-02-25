@@ -13,4 +13,4 @@ hs_err_pid*
 
 # Ignore jave class
 output/
-.idea
+.idea/
