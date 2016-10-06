@@ -3,12 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LinkedList/LinkedList.iml" filepath="$PROJECT_DIR$/LinkedList/LinkedList.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MyStack/MyStack.iml" filepath="$PROJECT_DIR$/MyStack/MyStack.iml" />
       <module fileurl="file://$PROJECT_DIR$/URLify/URLify.iml" filepath="$PROJECT_DIR$/URLify/URLify.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graph/graph.iml" filepath="$PROJECT_DIR$/graph/graph.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/java_leet_code.iml" filepath="$PROJECT_DIR$/.idea/java_leet_code.iml" />
       <module fileurl="file://$PROJECT_DIR$/median_two_sorted_arrays/median_two_sorted_arrays.iml" filepath="$PROJECT_DIR$/median_two_sorted_arrays/median_two_sorted_arrays.iml" />
       <module fileurl="file://$PROJECT_DIR$/palindromes/palindromes.iml" filepath="$PROJECT_DIR$/palindromes/palindromes.iml" />
       <module fileurl="file://$PROJECT_DIR$/permutation/permutation.iml" filepath="$PROJECT_DIR$/permutation/permutation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stackandqueue/stackandqueue.iml" filepath="$PROJECT_DIR$/stackandqueue/stackandqueue.iml" />
       <module fileurl="file://$PROJECT_DIR$/uniqueChars/uniqueChars.iml" filepath="$PROJECT_DIR$/uniqueChars/uniqueChars.iml" />
     </modules>
   </component>
