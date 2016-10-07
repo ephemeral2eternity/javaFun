@@ -46,19 +46,50 @@ public class MyBinaryTree<T extends Comparable> {
     }
 
     void printBranch(BTreeNode<T> root) {
-        Queue<BTreeNode> queue = new LinkedList<BTreeNode>();
-        queue.add(root);
+        Queue<BTreeNode> currentLevel = new LinkedList<BTreeNode>();
+        Queue<BTreeNode> nextLevel = new LinkedList<BTreeNode>();
+        BTreeNode<T> node;
+        currentLevel.add(root);
 
-        while (!queue.isEmpty()) {
-            BTreeNode<T> node = queue.remove();
-            node.print();
-            if (node.left != null) {
-                queue.add(node.left);
+        while (!currentLevel.isEmpty()) {
+            Iterator<BTreeNode> iter = currentLevel.iterator();
+            while (iter.hasNext()) {
+                node = iter.next();
+                node.print();
+                if (node.left != null) {
+                    nextLevel.add(node.left);
+                }
+                if (node.right != null) {
+                    nextLevel.add(node.right);
+                }
             }
-            if (node.right != null) {
-                queue.add(node.right);
-            }
-            // System.out.println();
+            System.out.println();
+            currentLevel = nextLevel;
+            nextLevel = new LinkedList<BTreeNode>();
+        }
+    }
+
+    void preOrderPrint(BTreeNode<T> root){
+        if (root != null) {
+            root.print();
+            preOrderPrint(root.left);
+            preOrderPrint(root.right);
+        }
+    }
+
+    void inOrderPrint(BTreeNode<T> root){
+        if (root != null) {
+            inOrderPrint(root.left);
+            root.print();
+            inOrderPrint(root.right);
+        }
+    }
+
+    void postOrderPrint(BTreeNode<T> root){
+        if (root != null) {
+            postOrderPrint(root.left);
+            postOrderPrint(root.right);
+            root.print();
         }
     }
 
@@ -67,8 +98,16 @@ public class MyBinaryTree<T extends Comparable> {
         MyBinaryTree<Integer> myTree = new MyBinaryTree<Integer>();
         BTreeNode<Integer> root = myTree.generateBinaryTree(ids);
 
+        System.out.println("Print the tree level by level: ");
         myTree.printBranch(root);
-
+        System.out.print("Print the node values in the tree's preorder traversal:");
+        myTree.preOrderPrint(root);
+        System.out.println();
+        System.out.print("Print the node values in the tree's inorder traversal:");
+        myTree.inOrderPrint(root);
+        System.out.println();
+        System.out.print("Print the node values in the tree's postorder traversal:");
+        myTree.postOrderPrint(root);
     }
 
 }
