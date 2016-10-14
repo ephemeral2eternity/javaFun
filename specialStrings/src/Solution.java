@@ -43,7 +43,7 @@ public class Solution {
      * Node Class for Vowels
      * Model each Vowel as a node in a graph and add allowed following vowels as its children
      **/
-    public class Node {
+    public static class Node {
         public char data;
         public ArrayList<Node> children = new ArrayList<Node>();
 
