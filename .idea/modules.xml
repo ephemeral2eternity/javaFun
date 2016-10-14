@@ -9,7 +9,9 @@
       <module fileurl="file://$PROJECT_DIR$/median_two_sorted_arrays/median_two_sorted_arrays.iml" filepath="$PROJECT_DIR$/median_two_sorted_arrays/median_two_sorted_arrays.iml" />
       <module fileurl="file://$PROJECT_DIR$/palindromes/palindromes.iml" filepath="$PROJECT_DIR$/palindromes/palindromes.iml" />
       <module fileurl="file://$PROJECT_DIR$/permutation/permutation.iml" filepath="$PROJECT_DIR$/permutation/permutation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/specialStrings/specialStrings.iml" filepath="$PROJECT_DIR$/specialStrings/specialStrings.iml" />
       <module fileurl="file://$PROJECT_DIR$/stackandqueue/stackandqueue.iml" filepath="$PROJECT_DIR$/stackandqueue/stackandqueue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/swapTree/swapTree.iml" filepath="$PROJECT_DIR$/swapTree/swapTree.iml" />
       <module fileurl="file://$PROJECT_DIR$/uniqueChars/uniqueChars.iml" filepath="$PROJECT_DIR$/uniqueChars/uniqueChars.iml" />
     </modules>
   </component>
