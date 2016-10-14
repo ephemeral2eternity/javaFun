@@ -41,10 +41,41 @@ import java.lang.*;
 public class Solution {
 
     /**
+     * Node Class for Vowels
+     * Model each Vowel as a node in a graph and add allowed following vowels as its children
+     **/
+    public static class Node {
+        public char data;
+        public ArrayList<Node> children;
+
+        public Node(char a) {
+            this.data = a;
+            this.children = new ArrayList<Node>();
+        }
+
+        /**
+         * Recursively traverse through all possible path from current node.
+         * @param  level  the depth of the count function will be called, namely the length of the path that will traversal.
+         * @return totalCnt the total number of path with length level in the graph starting from the current node
+         */
+        public int count(int level) {
+            if (level == 1) {
+                return 1;
+            }
+            else {
+                int totalCnt = 0;
+                for (Node current : children) {
+                    totalCnt += current.count(level - 1);
+                }
+                return totalCnt;
+            }
+        }
+    }
+
+    /**
      * Multiply the vector by the transit matrix to obtain the number of special
      * strings with one character longer that end with each vowel.
      * @param  arr  the array consisting of number of special strings ending with each vowel
-     *
      */
     public static void updateArray(long[] arr) {
         long a = arr[1] + arr[2] + arr[4];
@@ -71,7 +102,28 @@ public class Solution {
 
         for (int i = 0; i < d; i ++) {
             for (int j = 0; j < d; j ++) {
-               rst[i][j] += smat[i][j] * smat[j][i];
+                for (int k = 0; k < d; k ++) {
+                    rst[i][j] += smat[i][k] * smat[k][j];
+                }
+            }
+        }
+
+        return rst;
+    }
+
+    /**
+     * Get the multiplication of a matrix and a vector.
+     * @param mat input matrix.
+     * @param vec input vector.
+     * @return rst the result vector after multiplication
+     */
+    public long[] matMulvec(long[][] mat, long[] vec) {
+        int d = vec.length;
+        long[] rst = new long[d];
+
+        for (int i = 0; i < d; i ++) {
+            for (int j = 0; j < d; j ++) {
+                rst[i] += mat[i][j] * vec[j];
             }
         }
 
@@ -95,7 +147,9 @@ public class Solution {
 
         for (int i = 0; i < d; i ++) {
             for (int j = 0; j < d; j ++) {
-                rst[i][j] += A[i][j] * B[j][i];
+                for (int k = 0; k < d; k ++) {
+                    rst[i][j] += A[i][k] * B[k][j];
+                }
             }
         }
 
@@ -121,25 +175,28 @@ public class Solution {
         return exponents;
     }
 
+
     /**
      * Algorithm 1
      * Get the number of possible special strings with the denoted length according to the question.
      * Time complexity: O(logN)
      * Spatial complexity: two 5X5 matrix
      * @param length the length of the special string
-     * @return Stack<Integer> exponents the exponents of the base 2 expanded form of the input number N.
-     *                        the exponents in the stack would be popped from the minimum to the maximum.
+     * @return totalCnt the total number of possible special strings
      */
     public long findNumSpecialStringsV1(int length) {
         long[][] smat = {{0, 1, 1, 0, 1}, {1, 0, 1, 0, 0}, {0, 1, 0, 1, 0}, {0, 0, 1, 0, 0}, {0, 0, 1, 1, 0}};
         long[][] rst = {{1, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 1, 0, 0}, {0, 0, 0, 1, 0}, {0, 0, 0, 0, 1}};
         long[][] tmp = smat.clone();
+        long[] strCnts = {1, 1, 1, 1, 1};
+        long totalCnt;
         int pk = 0, k;
 
         Stack<Integer> exponents = new Stack<Integer>();
-        exponents = getExFormBase2Exponents(length);
+        exponents = getExFormBase2Exponents(length - 1);
         while(!exponents.isEmpty()) {
             k = exponents.pop();
+            // System.out.printf("The value of k: %d and pk: %d\n", k, pk);
             if (k == 0) {
                 rst = matrixMult(rst, smat);
             }
@@ -152,21 +209,90 @@ public class Solution {
             }
         }
 
+        strCnts = matMulvec(rst, strCnts);
 
+        totalCnt = strCnts[0] + strCnts[1] + strCnts[2] + strCnts[3] + strCnts[4];
 
+        return totalCnt;
     }
 
-
-
-
-    public static void main(String[] args) {
-        int level = 4;
+    /**
+     * Algorithm 2
+     * Get the number of possible special strings with the denoted length according to the question.
+     * Time complexity: O(N)
+     * Spatial complexity: two 5 dimensional vectors
+     * @param length the length of the special string
+     * @return totalCnt the total number of possible special strings
+     */
+    public long findNumSpecialStringsV2(int length) {
         long[] arr = {1, 1, 1, 1, 1};
         long count;
-        for (int i = 1; i < level; i ++) {
+        for (int i = 1; i < length; i ++) {
             updateArray(arr);
-            count = arr[0] + arr[1] + arr[2] + arr[3] + arr[4];
-            System.out.printf("Level %d: [%d %d %d %d %d] Count: %d\n", i, arr[0], arr[1], arr[2], arr[3], arr[4], count);
+            // count = arr[0] + arr[1] + arr[2] + arr[3] + arr[4];
+            // System.out.printf("Level %d: [%d %d %d %d %d] Count: %d\n", i, arr[0], arr[1], arr[2], arr[3], arr[4], count);
         }
+        count = arr[0] + arr[1] + arr[2] + arr[3] + arr[4];
+
+        return count;
     }
+
+    /**
+     * Algorithm 3
+     * Get the number of possible special strings with the denoted length according to the question.
+     * Time complexity: O(K^N)
+     * Spatial complexity: 5 nodes
+     * @param length the length of the special string
+     * @return totalCnt the total number of possible special strings
+     */
+    public long findNumSpecialStringsV3(int length) {
+        Node a = new Node('a');
+        Node e = new Node('e');
+        Node i = new Node('i');
+        Node o = new Node('o');
+        Node u = new Node('u');
+
+        a.children.add(e);
+        e.children.add(a);
+        e.children.add(i);
+        i.children.add(a);
+        i.children.add(e);
+        i.children.add(o);
+        i.children.add(u);
+        o.children.add(i);
+        o.children.add(u);
+        u.children.add(a);
+
+        long totalCnt = a.count(length) + e.count(length) + i.count(length) + o.count(length) + u.count(length);
+        // System.out.printf("Total number of strings for level %d is %d.\n", level, totalCnt);
+        return totalCnt;
+    }
+
+    public static void main(String[] args) {
+        int length = 20;
+        long startTime, endTime, totalCnts;
+        Solution sol = new Solution();
+
+        System.out.printf("Testing three versions of finding the number of possible special strings with string length %d!\n", length);
+
+        startTime = System.currentTimeMillis();
+        totalCnts = sol.findNumSpecialStringsV1(length);
+        endTime = System.currentTimeMillis();
+
+        System.out.printf("Algorithm 1: total count = %d; running time: %d milliseconds\n", totalCnts, endTime - startTime);
+
+        startTime = System.currentTimeMillis();
+        totalCnts = sol.findNumSpecialStringsV2(length);
+        endTime = System.currentTimeMillis();
+
+        System.out.printf("Algorithm 2: total count = %d; running time: %d milliseconds\n", totalCnts, endTime - startTime);
+
+        startTime = System.currentTimeMillis();
+        totalCnts = sol.findNumSpecialStringsV3(length);
+        endTime = System.currentTimeMillis();
+
+        System.out.printf("Algorithm 3: total count = %d; running time: %d milliseconds\n", totalCnts, endTime - startTime);
+
+    }
+
 }
