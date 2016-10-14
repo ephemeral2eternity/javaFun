@@ -39,18 +39,16 @@ import java.lang.*;
  * Created by Chen Wang on 10/7/2016.
  */
 public class Solution {
-
     /**
      * Node Class for Vowels
      * Model each Vowel as a node in a graph and add allowed following vowels as its children
      **/
-    public static class Node {
+    public class Node {
         public char data;
-        public ArrayList<Node> children;
+        public ArrayList<Node> children = new ArrayList<Node>();
 
         public Node(char a) {
-            this.data = a;
-            this.children = new ArrayList<Node>();
+            data = a;
         }
 
         /**
@@ -72,12 +70,13 @@ public class Solution {
         }
     }
 
+
     /**
      * Multiply the vector by the transit matrix to obtain the number of special
      * strings with one character longer that end with each vowel.
      * @param  arr  the array consisting of number of special strings ending with each vowel
      */
-    public static void updateArray(long[] arr) {
+    public void updateArray(long[] arr) {
         long a = arr[1] + arr[2] + arr[4];
         long e = arr[0] + arr[2];
         long i = arr[1] + arr[3];
@@ -94,17 +93,19 @@ public class Solution {
     /**
      * Get the multiplication of a matrix and a vector.
      * @param mat input matrix.
-     * @param vec input vector.
-     * @param rst the result vector after multiplication
+     * @return rst the result vector after multiplication
      */
-    public void matMulvec(long[][] mat, long[] vec, long[] rst) {
-        int d = vec.length;
+    public long[] matMulvec(long[][] mat) {
+        int d = mat.length;
+        long[] rst = new long[d];
 
         for (int i = 0; i < d; i ++) {
             for (int j = 0; j < d; j ++) {
-                rst[i] += mat[i][j] * vec[j];
+                rst[i] += mat[i][j];
             }
         }
+
+        return rst;
     }
 
     /**
@@ -113,30 +114,38 @@ public class Solution {
      * @param B the second input square matrix
      * @return rst the multiplication of square matrices A and B
      */
-    public void matrixMult(long[][] A, long[][] B, long[][] rst) {
+    public long[][] matrixMult(long[][] A, long[][] B) {
         int d = A.length;
+        int tmp;
+        long[][] rst = new long[d][d];
 
         if ((A.length != B.length) || (A[0].length != B[0].length)
                 || (A.length != A[0].length) || (B.length != B[0].length)) {
-            return;
+            return rst;
         }
 
         for (int i = 0; i < d; i ++) {
             for (int j = 0; j < d; j++) {
+                tmp = 0;
                 for (int k = 0; k < d; k++) {
-                    rst[i][j] += A[i][k] * B[k][j];
+                    tmp += A[i][k] * B[k][j];
                 }
+                rst[i][j] = tmp;
             }
         }
+
+        return rst;
     }
 
     /**
      * Get the square of the transition matrix.
      * @param  smat  the square transition matrix
-     * @param rst the square of the input matrix
+     * @return rst the square of the input matrix
      */
-    public void matrixSquare(long[][] smat, long[][] rst) {
-        matrixMult(smat, smat, rst);
+    public long[][] matrixSquare(long[][] smat) {
+        long[][] rst;
+        rst = matrixMult(smat, smat);
+        return rst;
     }
 
     /**
@@ -170,9 +179,9 @@ public class Solution {
     public long findNumSpecialStringsV1(int length) {
         long[][] smat = {{0, 1, 1, 0, 1}, {1, 0, 1, 0, 0}, {0, 1, 0, 1, 0}, {0, 0, 1, 0, 0}, {0, 0, 1, 1, 0}};
         long[][] rst = {{1, 0, 0, 0, 0}, {0, 1, 0, 0, 0}, {0, 0, 1, 0, 0}, {0, 0, 0, 1, 0}, {0, 0, 0, 0, 1}};
-        long[][] tmprst = rst.clone();
+        long[][] tmprst = new long[5][5];
         long[][] tmp = smat.clone();
-        long[] strCnts = {1, 1, 1, 1, 1};
+        long[] strCnts = new long[5];
         long totalCnt;
         int pk = 0, k;
 
@@ -182,21 +191,18 @@ public class Solution {
             k = exponents.pop();
             // System.out.printf("The value of k: %d and pk: %d\n", k, pk);
             if (k == 0) {
-                matrixMult(rst, smat, tmprst);
-                rst = tmprst.clone();
+                rst = matrixMult(rst, smat);
             }
             else {
                 for (int i = 0; i < k - pk; i ++) {
-                    matrixSquare(tmp, tmprst);
-                    tmp = tmprst.clone();
+                    tmp = matrixSquare(tmp);
                 }
                 pk = k;
-                matrixMult(rst, tmp, tmprst);
-                rst = tmprst.clone();
+                rst = matrixMult(rst, tmp);
             }
         }
 
-        matMulvec(rst, strCnts);
+        strCnts = matMulvec(rst);
 
         totalCnt = strCnts[0] + strCnts[1] + strCnts[2] + strCnts[3] + strCnts[4];
 
