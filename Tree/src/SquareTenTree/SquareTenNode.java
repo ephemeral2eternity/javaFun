@@ -21,7 +21,7 @@ public class SquareTenNode {
     public SquareTenNode(String left, String right) {
         this.leftBound = left;
         this.rightBound = right;
-        System.out.printf("Node range [%s, %s]\n", left, right);
+        // System.out.printf("Node range [%s, %s]\n", left, right);
         this.level = getLevel(left, right);
         int stepDigit = 1;
 
@@ -29,8 +29,8 @@ public class SquareTenNode {
             stepDigit = (int) Math.pow(2, this.level - 1);
         }
 
-        System.out.printf("Level: %d\n", this.level);
-        System.out.printf("stepDigits: %d\n", stepDigit);
+        // System.out.printf("Level: %d\n", this.level);
+        // System.out.printf("stepDigits: %d\n", stepDigit);
         // System.out.printf("Node range [%s, %s]\n", left, right);
 
         left = fillLeadingZero(left, right.length());
@@ -48,12 +48,12 @@ public class SquareTenNode {
 
         if (this.blkCnt.equals("0") || (this.blkCnt.startsWith("-"))) {
             this.blkCnt = removeLeadingZero(strAddOne(strMinus(right, left)));
-            System.out.printf("Block count on current node : %s\n", this.blkCnt);
+            // System.out.printf("Block count on current node : %s\n", this.blkCnt);
             this.left = null;
             this.right = null;
         }
         else {
-            System.out.printf("Block count on current node : %s\n", this.blkCnt);
+            // System.out.printf("Block count on current node : %s\n", this.blkCnt);
             String leftRightBound = removeLeadingZero(blkLeftPrefix + rightBoundarySuffix);
             String rightLeftBound = removeLeadingZero(blkRightPrefix + leftBoundarySuffix);
 
@@ -230,26 +230,18 @@ public class SquareTenNode {
         return new String(diffChArr);
     }
 
-    public String countBlocks(String left, String right, int digits) {
-        String blkCnt = strMinus(right.substring(0, right.length() - digits), left.substring(0, left.length() - digits));
-        return blkCnt;
-    }
-
     public int getLevel(String left, String right) {
         int leftLen = left.length();
         int rightLen = right.length();
 
         left = fillLeadingZero(left, right.length());
         String diff = removeLeadingZero(strAddOne(strMinus(right, left)));
-        System.out.printf("Difference is %s\n", diff);
+        // System.out.printf("Difference is %s\n", diff);
         int diffLen = diff.length();
         int i = 0, level;
 
         if (diffLen == 1){
             level = 0;
-        }
-        else if  (diffLen == 2) {
-            level = 1;
         }
         else {
             level = (int) (Math.log(diffLen - 1)/ Math.log(2)) + 1;
