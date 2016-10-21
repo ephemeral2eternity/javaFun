@@ -1,8 +1,4 @@
 package SquareTenTree;
-
-import com.sun.deploy.util.StringUtils;
-import com.sun.jdi.connect.Connector;
-
 import java.util.*;
 
 /**
@@ -57,7 +53,7 @@ public class SquareTenNode {
             String leftRightBound = removeLeadingZero(blkLeftPrefix + rightBoundarySuffix);
             String rightLeftBound = removeLeadingZero(blkRightPrefix + leftBoundarySuffix);
 
-            if (compare(this.leftBound, leftRightBound) >= 0) {
+            if (compare(this.leftBound, leftRightBound) > 0) {
                 this.left = null;
             }
             else {
@@ -66,7 +62,7 @@ public class SquareTenNode {
                 this.size += this.left.size;
             }
 
-            if (compare(this.rightBound,rightLeftBound) <= 0) {
+            if (compare(this.rightBound,rightLeftBound) < 0) {
                 this.right = null;
             }
             else{
