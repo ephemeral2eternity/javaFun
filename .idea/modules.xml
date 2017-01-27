@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Array/Array.iml" filepath="$PROJECT_DIR$/Array/Array.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Arrays.iml" filepath="$PROJECT_DIR$/Arrays.iml" />
       <module fileurl="file://$PROJECT_DIR$/ClientServer/ClientServer.iml" filepath="$PROJECT_DIR$/ClientServer/ClientServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/LinkedList/LinkedList.iml" filepath="$PROJECT_DIR$/LinkedList/LinkedList.iml" />
       <module fileurl="file://$PROJECT_DIR$/QuoteServer/QuoteServer.iml" filepath="$PROJECT_DIR$/QuoteServer/QuoteServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tree/Tree.iml" filepath="$PROJECT_DIR$/Tree/Tree.iml" />
-      <module fileurl="file://$PROJECT_DIR$/URLify/URLify.iml" filepath="$PROJECT_DIR$/URLify/URLify.iml" />
       <module fileurl="file://$PROJECT_DIR$/graph/graph.iml" filepath="$PROJECT_DIR$/graph/graph.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/java_leet_code.iml" filepath="$PROJECT_DIR$/.idea/java_leet_code.iml" />
       <module fileurl="file://$PROJECT_DIR$/median_two_sorted_arrays/median_two_sorted_arrays.iml" filepath="$PROJECT_DIR$/median_two_sorted_arrays/median_two_sorted_arrays.iml" />
